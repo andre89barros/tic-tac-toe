@@ -7,6 +7,8 @@ const INITIAL_STATE_BOARD = [
   ['', '', '']
 ]
 
+const PLAYER_SYMBOLS = ['X','O']
+
 class Board extends Component {
 
   constructor (props) {
@@ -14,9 +16,11 @@ class Board extends Component {
 
     this.state = {
       board: INITIAL_STATE_BOARD,
-      player: 'X'
+      player: PLAYER_SYMBOLS[0],
+      winner: null
     }
     this.handleClick = this.handleClick.bind(this)
+    this.winner = this.winner.bind(this)
   }
 
   handleClick (rowIndex, colIndex) {
@@ -24,19 +28,34 @@ class Board extends Component {
     const board = this.state.board
     board[rowIndex][colIndex] = this.state.player
 
+    const isWinner = this.winner(board, 'X')
+
     this.setState(prevState => ({
           board,
-          player: prevState.player === 'X' ? 'O' : 'X'
+          player: prevState.player === 'X' ? 'O' : 'X',
+          winner: isWinner
         }
       )
     )
 
   }
 
+  winner (board, player) {
+
+    for (let i = 0; i < board.length; i++) {
+        if(board[i][0] === board[i][1] && board[i][0] === board[i][2]  && board[i][0] === player){
+          return player
+        }
+    }
+    return null;
+  }
+
   render () {
-    const {board} = this.state
+    const {board, winner, player} = this.state
+    const status = winner ? `player ${player} won!` : `next player: ${player}`
     return (
       <div className="board">
+        <div className="status">{status}</div>
         {board.map((row, rowIndex) =>
           <div key={rowIndex} className="row">
             {row.map((cell, colIndex) =>
@@ -44,8 +63,7 @@ class Board extends Component {
                     handleClick={this.handleClick}/>
             )}
           </div>
-        )
-        }
+        )}
       </div>
     )
   }

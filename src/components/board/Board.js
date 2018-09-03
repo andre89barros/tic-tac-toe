@@ -17,7 +17,7 @@ class Board extends Component {
     this.state = {
       board: INITIAL_STATE_BOARD,
       player: PLAYER_SYMBOLS[0],
-      winner: null
+      winner: false
     }
     this.handleClick = this.handleClick.bind(this)
     this.winner = this.winner.bind(this)
@@ -28,7 +28,8 @@ class Board extends Component {
     const board = this.state.board
     board[rowIndex][colIndex] = this.state.player
 
-    const isWinner = this.winner(board, 'X')
+    let isWinner = this.winner(board, 'X')
+    isWinner = !isWinner ? this.winner(board, 'O') : isWinner
 
     this.setState(prevState => ({
           board,
@@ -48,13 +49,13 @@ class Board extends Component {
           return player
         }
     }
-    return null;
+    return false;
   }
 
   //fixme the css is turning rows into columns and vice versa
   render () {
     const {board, winner, player} = this.state
-    const status = winner ? `player ${player} won!` : `next player: ${player}`
+    const status = winner ? `player ${winner} won!` : `next player: ${player}`
     return (
       <div className="board">
         <div className="status">{status}</div>

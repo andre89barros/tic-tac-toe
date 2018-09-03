@@ -7,7 +7,7 @@ const INITIAL_STATE_BOARD = [
   ['', '', '']
 ]
 
-const PLAYER_SYMBOLS = ['X','O']
+const PLAYER_SYMBOLS = ['X', 'O']
 
 class Board extends Component {
 
@@ -41,15 +41,33 @@ class Board extends Component {
 
   }
 
-  //fixme check for columns and diagonal
+  /**
+   * checks for a winner
+   * @param board
+   * @param player
+   * @returns player | false if can't find any winner
+   */
   winner (board, player) {
 
     for (let i = 0; i < board.length; i++) {
-        if(board[i][0] === board[i][1] && board[i][0] === board[i][2]  && board[i][0] === player){
-          return player
-        }
+      if (board[i][0] === board[i][1] && board[i][0] === board[i][2] && board[i][0] === player) {
+        return player
+      }
+
+      if (board[0][i] === board[1][i] && board[0][i] === board[2][i] && board[0][i] === player) {
+        return player
+      }
     }
-    return false;
+
+    if (board[0][0] === board[1][1] && board[0][0] === board[2][2] && board[0][0] === player) {
+      return player
+    }
+
+    if (board[0][2] === board[1][1] && board[0][2] === board[2][0] && board[0][2] === player) {
+      return player
+    }
+
+    return false
   }
 
   //fixme the css is turning rows into columns and vice versa

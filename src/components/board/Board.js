@@ -40,6 +40,7 @@ class Board extends Component {
 
   }
 
+  //fixme check for columns and diagonal
   winner (board, player) {
 
     for (let i = 0; i < board.length; i++) {
@@ -50,6 +51,7 @@ class Board extends Component {
     return null;
   }
 
+  //fixme the css is turning rows into columns and vice versa
   render () {
     const {board, winner, player} = this.state
     const status = winner ? `player ${player} won!` : `next player: ${player}`

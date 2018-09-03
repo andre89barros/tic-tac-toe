@@ -15,17 +15,21 @@ class Board extends Component {
     super(props)
 
     this.state = {
-      board: INITIAL_STATE_BOARD,
+      board: [...INITIAL_STATE_BOARD],
       player: PLAYER_SYMBOLS[0],
       winner: false
     }
     this.handleClick = this.handleClick.bind(this)
     this.winner = this.winner.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
   handleClick (rowIndex, colIndex) {
 
-    const board = this.state.board
+    const {board, winner} = this.state
+    if(board[rowIndex][colIndex] || winner ){
+      return
+    }
     board[rowIndex][colIndex] = this.state.player
 
     let isWinner = this.winner(board, 'X')
@@ -39,6 +43,16 @@ class Board extends Component {
       )
     )
 
+  }
+
+  reset (e) {
+    this.setState({
+      board: [['', '', ''],
+        ['', '', ''],
+        ['', '', '']],
+      player: PLAYER_SYMBOLS[0],
+      winner: false
+    })
   }
 
   /**
@@ -70,21 +84,23 @@ class Board extends Component {
     return false
   }
 
-  //fixme the css is turning rows into columns and vice versa
   render () {
     const {board, winner, player} = this.state
     const status = winner ? `player ${winner} won!` : `next player: ${player}`
     return (
       <div className="board">
         <div className="status">{status}</div>
-        {board.map((row, rowIndex) =>
-          <div key={rowIndex} className="row">
-            {row.map((cell, colIndex) =>
-              <Cell key={colIndex} rowIndex={rowIndex} colIndex={colIndex} value={board[rowIndex][colIndex]}
-                    handleClick={this.handleClick}/>
-            )}
-          </div>
-        )}
+        <button onClick={this.reset}>Reset</button>
+        <div className="game">
+          {board.map((row, rowIndex) =>
+            <div key={rowIndex} className="row">
+              {row.map((cell, colIndex) =>
+                <Cell key={colIndex} rowIndex={rowIndex} colIndex={colIndex} value={board[rowIndex][colIndex]}
+                      handleClick={this.handleClick}/>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     )
   }

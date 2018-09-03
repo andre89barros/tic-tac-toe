@@ -38,9 +38,9 @@ class Board extends Component {
     return (
       <div className="board">
         {board.map((row, rowIndex) =>
-          <div className="row">
+          <div key={rowIndex} className="row">
             {row.map((cell, colIndex) =>
-              <Cell rowIndex={rowIndex} colIndex={colIndex} value={board[rowIndex][colIndex]}
+              <Cell key={colIndex} rowIndex={rowIndex} colIndex={colIndex} value={board[rowIndex][colIndex]}
                     handleClick={this.handleClick}/>
             )}
           </div>

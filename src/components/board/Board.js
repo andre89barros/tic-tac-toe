@@ -15,7 +15,11 @@ class Board extends Component {
     super(props)
 
     this.state = {
-      board: [...INITIAL_STATE_BOARD],
+      board: [
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', '']
+      ],
       player: PLAYER_SYMBOLS[0],
       winner: false
     }
@@ -47,9 +51,11 @@ class Board extends Component {
 
   reset (e) {
     this.setState({
-      board: [['', '', ''],
+      board: [
         ['', '', ''],
-        ['', '', '']],
+        ['', '', ''],
+        ['', '', '']
+      ],
       player: PLAYER_SYMBOLS[0],
       winner: false
     })
@@ -106,8 +112,12 @@ class Board extends Component {
           {board.map((row, rowIndex) =>
             <div key={rowIndex} className="row">
               {row.map((cell, colIndex) =>
-                <Cell key={colIndex} rowIndex={rowIndex} colIndex={colIndex} value={board[rowIndex][colIndex]}
-                      handleClick={this.handleClick}/>
+                <Cell key={colIndex}
+                      rowIndex={rowIndex}
+                      colIndex={colIndex}
+                      value={board[rowIndex][colIndex]}
+                      handleClick={this.handleClick}
+                />
               )}
             </div>
           )}

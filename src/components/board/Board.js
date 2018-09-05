@@ -106,8 +106,6 @@ class Board extends Component {
     const status = winner ? `player ${winner} won!` : this.draw(board) ? 'A Draw!' : `next player: ${player}`
     return (
       <div className="board">
-        <div className="status">{status}</div>
-        <button onClick={this.reset}>Reset</button>
         <div className="game">
           {board.map((row, rowIndex) =>
             <div key={rowIndex} className="row">
@@ -122,6 +120,8 @@ class Board extends Component {
             </div>
           )}
         </div>
+        <div className="status">{status}</div>
+        <button onClick={this.reset}>Reset</button>
       </div>
     )
   }

@@ -27,7 +27,7 @@ class Board extends Component {
   handleClick (rowIndex, colIndex) {
 
     const {board, winner} = this.state
-    if(board[rowIndex][colIndex] || winner ){
+    if (board[rowIndex][colIndex] || winner) {
       return
     }
     board[rowIndex][colIndex] = this.state.player
@@ -84,9 +84,20 @@ class Board extends Component {
     return false
   }
 
+  draw (board) {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board.length; j++) {
+        if (!board[i][j]) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   render () {
     const {board, winner, player} = this.state
-    const status = winner ? `player ${winner} won!` : `next player: ${player}`
+    const status = winner ? `player ${winner} won!` : this.draw(board) ? 'A Draw!' : `next player: ${player}`
     return (
       <div className="board">
         <div className="status">{status}</div>
